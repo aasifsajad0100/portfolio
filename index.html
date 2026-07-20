@@ -383,6 +383,7 @@
   }
   .send-msg input:focus, .send-msg textarea:focus{outline:none; border-color:var(--teal);}
   .send-msg button{margin-top:16px; border:none; cursor:pointer;}
+  .send-msg button:disabled{opacity:0.65; cursor:not-allowed; transform:none;}
   .form-note{
     font-size:12px; color:var(--fg-muted); text-align:center; margin-top:10px; max-width:none;
   }
@@ -436,7 +437,7 @@
       <circle cx="300" cy="440" r="2.5" style="animation-delay:2s"/>
     </svg>
     <div class="wrap">
-      <div class="status-pill"><span class="status-dot"></span> OPEN TO DATA / ML ROLES</div>
+      <div class="status-pill"><span class="status-dot"></span> OPEN TO DATA / ML ROLES &amp; WEB DEV WORK</div>
       <div class="hero-grid">
         <div>
           <h1 class="name"><span class="name-line">ASIF</span><span class="name-line accent">SAJAD</span></h1>
@@ -475,7 +476,7 @@
 
       <div class="stats reveal">
         <div class="stat"><div class="num" data-count="1">0</div><div class="label">INTERNSHIPS</div></div>
-        <div class="stat"><div class="num" data-count="0">0</div><div class="label">CERTIFICATIONS <span class="edit-flag" style="display:inline;">edit count</span></div></div>
+        <div class="stat"><div class="num" data-count="5">0</div><div class="label">CERTIFICATIONS</div></div>
         <div class="stat"><div class="num" data-count="1">0</div><div class="label">PROJECTS BUILT</div></div>
         <div class="stat"><div class="num" data-count="2028" data-nocomma="true">0</div><div class="label">GRADUATING</div></div>
       </div>
@@ -493,14 +494,14 @@
           <p>I'm a <strong>3rd-year BSc Data Science student</strong> at the Islamic University of Science and Technology, with a solid hold on <strong>HTML, C, C++, Python, R, and MS Office</strong> — comfortable moving between low-level programming fundamentals and higher-level data workflows like cleaning, exploring, and modeling data.</p>
           <p>I completed an internship at <strong>NIT Srinagar</strong>, where I worked hands-on with <strong>machine learning using Python</strong> — from raw, messy data through preprocessing and exploratory analysis, to building and evaluating models whose results actually meant something.</p>
           <p>Data science, to me, sits at the intersection of statistics, code, and curiosity: I like the process of turning a spreadsheet full of numbers into a model that can actually predict something useful. Outside of coursework, I spend time in R for statistical exploration and Python for applied ML, and I'm steadily picking up the surrounding tooling — Git, SQL, and data visualization — that turns a model into something shippable.</p>
-          <p>I'm looking to grow into a <strong>Data / ML Engineering role</strong> — an internship or entry-level position where I can keep building pipelines and models that hold up outside a notebook, while learning fast from people further along the path.</p>
+          <p>I'm looking to grow into a <strong>Data / ML Engineering role</strong> — an internship or entry-level position where I can keep building pipelines and models that hold up outside a notebook, while learning fast from people further along the path. I'm also open to <strong>freelance website-building work</strong> using HTML, CSS, and JavaScript — so feel free to reach out if that's what you need.</p>
         </div>
         <div class="info-card reveal">
           <div class="info-row"><span class="k">EDUCATION</span><span class="v">BSc Data Science, IUST — 3rd Year</span></div>
           <div class="info-row"><span class="k">BASED IN</span><span class="v">Pulwama, Jammu and Kashmir</span></div>
           <div class="info-row"><span class="k">FOCUS</span><span class="v">Python · R · ML</span></div>
           <div class="info-row"><span class="k">TOOLS</span><span class="v">C · C++ · MS Office</span></div>
-          <div class="info-row"><span class="k">AVAILABILITY</span><span class="v">Internships / Entry-level</span></div>
+          <div class="info-row"><span class="k">AVAILABILITY</span><span class="v">Internships / Web Projects</span></div>
           <div class="info-row"><span class="k">GRADUATING</span><span class="v">2028</span></div>
         </div>
       </div>
@@ -520,7 +521,7 @@
         <ul class="now-list">
           <li><span class="now-label">Currently Building</span> A small ML project analyzing student performance data with Python <span class="edit-flag" style="display:inline;">— swap for your real project</span></li>
           <li><span class="now-label">Learning</span> SQL and data visualization to round out the ML side with real data-engineering skills</li>
-          <li><span class="now-label">Seeking</span> Internships and entry-level Data / ML Engineering roles</li>
+          <li><span class="now-label">Seeking</span> Internships and entry-level Data / ML Engineering roles — also open for website-building projects (HTML, CSS, JS)</li>
           <li><span class="now-label">Reading</span> Hands-On Machine Learning with Scikit-Learn &amp; TensorFlow — Aurélien Géron <span class="edit-flag" style="display:inline;">— swap for what you're actually reading</span></li>
         </ul>
       </div>
@@ -674,9 +675,8 @@
             <a href="https://github.com/aasifsajad0100" target="_blank" rel="noopener">⌥ GitHub</a>
           </div>
         </div>
-        <form class="send-msg" action="https://formsubmit.co/aasifsajad2@gmail.com" method="POST">
+        <form class="send-msg" id="contactForm" action="https://formsubmit.co/aasifsajad2@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="New message from your portfolio site">
-          <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <label for="f-name">Name</label>
@@ -685,8 +685,8 @@
           <input type="email" id="f-email" name="Email" placeholder="you@example.com">
           <label for="f-msg">Message</label>
           <textarea id="f-msg" name="Message" rows="4" required placeholder="What's on your mind?"></textarea>
-          <button type="submit" class="btn btn-primary" style="justify-content:center;">Send message →</button>
-          <p class="form-note">Sent directly to me — no email app needed, and email is optional.</p>
+          <button type="submit" class="btn btn-primary" id="sendBtn" style="justify-content:center;">Send message →</button>
+          <p class="form-note" id="formStatus">Sent directly to me — no email app needed, and email is optional.</p>
         </form>
       </div>
     </div>
@@ -756,6 +756,37 @@
       const fill = bar.getAttribute('data-fill') + '%';
       bar.style.setProperty('--fill', fill);
       requestAnimationFrame(() => bar.classList.add('filled'));
+    });
+  }  // Contact form — submit quietly via FormSubmit's AJAX endpoint (no page redirect)
+  const contactForm = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+  const sendBtn = document.getElementById('sendBtn');
+  if(contactForm){
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const originalBtnText = sendBtn.textContent;
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending...';
+      formStatus.textContent = 'Sending your message...';
+      formStatus.style.color = '';
+      try{
+        const res = await fetch('https://formsubmit.co/ajax/aasifsajad2@gmail.com', {
+          method: 'POST',
+          headers: {'Accept': 'application/json'},
+          body: new FormData(contactForm)
+        });
+        if(res.ok){
+          formStatus.textContent = "Message sent — thanks! I'll get back to you soon.";
+          contactForm.reset();
+        } else {
+          formStatus.textContent = "Something went wrong. Please email me directly instead.";
+        }
+      } catch(err){
+        formStatus.textContent = "Something went wrong. Please email me directly instead.";
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = originalBtnText;
+      }
     });
   }
 </script>
